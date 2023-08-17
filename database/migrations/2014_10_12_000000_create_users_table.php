@@ -12,6 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->comment('用户表');
+
             $table->bigIncrements('id');
             $table->char('editor_type', 10)->default('')->nullable(false)->comment('更新用户类型');
             $table->unsignedBigInteger('editor_id')->default(0)->nullable(false)->comment('更新用户ID');
@@ -27,9 +29,8 @@ return new class extends Migration
             $table->dateTime('locked_at')->default(null)->nullable(true)->comment('锁定时间');
             $table->unsignedBigInteger('last_login_id')->default(0)->nullable(false)->comment('最新登录ID');
             $table->dateTime('last_login_at')->nullable(true)->comment('最新登录时间');
-            $table->boolean('is_deleted')->default(false)->nullable(false)->comment('是否删除');
             $table->datetimes();
-            $table->dateTime('deleted_at')->nullable(true)->comment('删除时间');
+            $table->softDeletes()->comment('删除时间');
         });
     }
 
